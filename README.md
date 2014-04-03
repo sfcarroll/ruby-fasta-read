@@ -1,7 +1,7 @@
 [![Gem Version](https://badge.fury.io/rb/fasta_read.svg)](http://badge.fury.io/rb/fasta_read) [![Build Status](https://travis-ci.org/adamico/ruby-fasta-read.svg?branch=master)](https://travis-ci.org/adamico/ruby-fasta-read) [![Code Climate](https://codeclimate.com/github/adamico/ruby-fasta-read.png)](https://codeclimate.com/github/adamico/ruby-fasta-read)
 # FastaRead
 
-A Ruby command-line program that will take coordinates and return either a unmasked sequence or a snp-masked sequence. The coordinates refer to the start and stop positions, and are "UCSC coordinates" i.e. 0 based and half open (see [UCSC_coordinate_transforms](http://genomewiki.ucsc.edu/index.php/Coordinate_Transforms)) 
+A Ruby command-line program that will take coordinates and return either a unmasked gene sequence or a snp-masked sequence. The coordinates refer to the start and stop positions, and are "UCSC coordinates" i.e. 0 based and half open (see [UCSC_coordinate_transforms](http://genomewiki.ucsc.edu/index.php/Coordinate_Transforms)) 
 
 ## Installation
 
