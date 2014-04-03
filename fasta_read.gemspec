@@ -10,7 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["andrea.damico@gmail.com"]
   spec.summary       = %q{Fasta sequence extracter}
   spec.description   = %q{Extract DNA Fasta sequence from assembly files.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/adamico/ruby-fasta-read"
+
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -18,12 +19,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency('rake', '~> 0.9.2')
-  spec.add_dependency('methadone', '~> 1.3.2')
-  spec.add_development_dependency "bundler", "~> 1.5"
-  spec.add_development_dependency('rdoc')
-  spec.add_development_dependency('aruba')
-  spec.add_development_dependency('rspec')
-  spec.add_development_dependency "guard-cucumber"
-  spec.add_development_dependency "guard-rspec"
+  spec.add_runtime_dependency 'methadone', '>= 1.3.2'
+  spec.add_development_dependency 'rake', '>= 0.9.2'
+  spec.add_development_dependency 'aruba', '>= 0.5.4'
+  spec.add_development_dependency 'rspec', '>= 2.14.1'
+  spec.add_development_dependency "guard-cucumber", '>= 1.4.1'
+  spec.add_development_dependency "guard-rspec", '>= 4.2.8'
 end
