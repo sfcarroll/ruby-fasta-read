@@ -17,7 +17,6 @@ class App
     debug("About to read #{assembly} #{snp} chr#{chromosome}:#{cstart}-#{cend}")
     if File.exist?(path)
       puts IO.read(path, cend.to_i - cstart.to_i, cstart.to_i)
-      info "correct execution"
     else
       exit_now_with!(assembly_or_chromosome(assembly, chromosome))
     end
