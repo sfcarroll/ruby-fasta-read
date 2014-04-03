@@ -34,13 +34,10 @@ raise
 end
 
 require 'cucumber/rake/task'
-gem 'rdoc' # we need the installed RDoc gem, not the system one
-require 'rdoc/task'
 
 include Rake::DSL
 
 Bundler::GemHelper.install_tasks
-
 
 RSpec::Core::RakeTask.new do |t|
   # Put spec opts in a file named .rspec in root
@@ -54,13 +51,5 @@ Cucumber::Rake::Task.new(:features) do |t|
   t.fork = false
 end
 
-Rake::RDocTask.new do |rd|
-  
-  rd.main = "README.rdoc"
-  
-  rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
-end
-
 desc "Run Cucumber features"
 task :default => [:features]
-
