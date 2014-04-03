@@ -11,12 +11,17 @@ class App
 
   main do |assembly, chromosome, cstart, cend|
     masked_unmasked = options[:snp] ? ["snp", ".subst"] : ["unmasked", ""]
-    info("About to read #{assembly} #{masked_unmasked[0]} chr#{chromosome}:#{cstart}-#{cend}")
+    debug("About to read #{assembly} #{masked_unmasked[0]} chr#{chromosome}:#{cstart}-#{cend}")
+    path = "fasta/#{assembly}/#{masked_unmasked[0]}/chr#{chromosome + masked_unmasked[1]}.fa"
     if Dir.exist?("fasta/#{assembly}")
-      puts IO.read("fasta/#{assembly}/#{masked_unmasked[0]}/chr#{chromosome}#{masked_unmasked[1]}.fa", cend.to_i - cstart.to_i, cstart.to_i)
-      info "correct execution"
+      if File.exist?(path)
+        puts IO.read(path, cend.to_i - cstart.to_i, cstart.to_i)
+        info "correct execution"
+      else
+        exit_now!(1, "the '#{chromosome}' chromosome doesn't exist in directory structure")
+      end
     else
-      error "the '#{assembly}' assembly doesn't exist in directory structure"
+      exit_now!(1, "the '#{assembly}' assembly doesn't exist in directory structure")
     end
   end
 

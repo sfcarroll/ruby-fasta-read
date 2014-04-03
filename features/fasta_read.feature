@@ -47,9 +47,14 @@ Feature: My bootstrapped app kinda works
       |hg19 12 10 20 --snp|tctttttttt|ccaga  |
 
   @announce
-  Scenario Outline: argument values not found
+  Scenario Outline: Painful path
     When I run `fasta_read <options>`
     Then the stderr should contain "<output>"
-    Scenarios: assembly not found
-      |options      |output                                                 |
-      |foo 12 0 3   |the 'foo' assembly doesn't exist in directory structure|
+    Scenarios: incorrect assembly/chromosome
+      |options                      |output                                                  |
+      |foo 12 0 3 --log-level=debug |the 'foo' assembly doesn't exist in directory structure |
+      |hg19 99 0 3 --log-level=debug|the '99' chromosome doesn't exist in directory structure|
+
+    Scenarios: out of bounds stop coordinate
+      |options                        |output                                                             |
+      |hg19 12 0 100 --log-level=debug|the stop coordinate '100' is out of bounds for the given chromosome|
