@@ -3,11 +3,53 @@ Feature: My bootstrapped app kinda works
   I want to have aruba and cucumber setup
   So I don't have to do it myself
 
-  Scenario: App just runs
+  Background:
+    Given a file named "fasta/hg19/unmasked/chr12.fa" with:
+      """
+      gatccacctgcctcagcctcccagagtgctgggattataggtgtgagccactgcacccggcc
+      """
+    And a file named "fasta/hg19/snp/chr12.subst.fa" with:
+      """
+      GAAAACtttttcttttttttgagataggttctcactctggttgttgcccaggctggagtgca
+      """
+
+  @announce
+  Scenario: Basic UI
     When I get help for "fasta_read"
     Then the exit status should be 0
-    And the banner should be present
-    And the banner should document that this app takes options
-    And the following options should be documented:
-      |--version|
-    And the banner should document that this app takes no arguments
+      And the banner should be present
+      And there should be a one line summary of what the app does
+      And the banner should include the version
+      And the banner should document that this app takes options
+      And the following options should be documented:
+        |--version|
+        |--snp    |
+        |--output |
+        |-o       |
+      And the banner should document that this app's arguments are
+        |assembly  |which is required|
+        |chromosome|which is required|
+        |cstart    |which is required|
+        |cend      |which is required|
+
+  @announce
+  Scenario Outline: Happy path
+    When I successfully run `fasta_read <options>`
+    Then the output should contain "<output>"
+    Then the output should not contain "<noutput>"
+
+    Scenarios: unmasked
+      |options      |output    |noutput|
+      |hg19 12 0 3  |gat       |cca    |
+      |hg19 12 10 20|cctcagcctc|ccaga  |
+    Scenarios: snp
+      |options            |output    |noutput|
+      |hg19 12 10 20 --snp|tctttttttt|ccaga  |
+
+  @announce
+  Scenario Outline: argument values not found
+    When I run `fasta_read <options>`
+    Then the stderr should contain "<output>"
+    Scenarios: assembly not found
+      |options      |output                                                 |
+      |foo 12 0 3   |the 'foo' assembly doesn't exist in directory structure|

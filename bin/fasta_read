@@ -3,34 +3,45 @@
 require 'optparse'
 require 'methadone'
 require 'fasta_read.rb'
+require 'fileutils'
 
 class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do # Add args you want: |like,so|
-    # your program code here
-    # You can access CLI options via
-    # the options Hash
+  main do |assembly, chromosome, cstart, cend|
+    masked_unmasked = options[:snp] ? ["snp", ".subst"] : ["unmasked", ""]
+    info("About to read #{assembly} #{masked_unmasked[0]} chr#{chromosome}:#{cstart}-#{cend}")
+    if Dir.exist?("fasta/#{assembly}")
+      puts IO.read("fasta/#{assembly}/#{masked_unmasked[0]}/chr#{chromosome}#{masked_unmasked[1]}.fa", cend.to_i - cstart.to_i, cstart.to_i)
+      info "correct execution"
+    else
+      error "the '#{assembly}' assembly doesn't exist in directory structure"
+    end
   end
 
   # supplemental methods here
 
   # Declare command-line interface here
 
-  # description "one line description of your app"
+  description "Extract DNA Fasta sequence from assembly files."
   #
   # Accept flags via:
   # on("--flag VAL","Some flag")
   # options[flag] will contain VAL
   #
   # Specify switches via:
+  on "-o OUTPUTFILE", "--output", "outputs sequence to a file"
+  on "--snp", "return the sequence from the SNP-masked assembly"
   # on("--[no-]switch","Some switch")
   #
   # Or, just call OptionParser methods on opts
   #
   # Require an argument
-  # arg :some_arg 
+  arg :assembly,   "assembly name (hg19, mm10, etc.)"
+  arg :chromosome, "id of chromosome (1-22 or X/Y)"
+  arg :cstart,     "start coordinate (inclusive) within the chromosome"
+  arg :cend,       "end coordinate within the chromosome"
   #
   # # Make an argument optional
   # arg :optional_arg, :optional
