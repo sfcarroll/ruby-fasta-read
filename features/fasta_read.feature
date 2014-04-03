@@ -54,7 +54,3 @@ Feature: My bootstrapped app kinda works
       |options                      |output                                                  |
       |foo 12 0 3 --log-level=debug |the 'foo' assembly doesn't exist in directory structure |
       |hg19 99 0 3 --log-level=debug|the '99' chromosome doesn't exist in directory structure|
-
-    Scenarios: out of bounds stop coordinate
-      |options                        |output                                                             |
-      |hg19 12 0 100 --log-level=debug|the stop coordinate '100' is out of bounds for the given chromosome|
