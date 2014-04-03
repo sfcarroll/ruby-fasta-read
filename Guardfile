@@ -3,6 +3,8 @@
 
 guard 'cucumber', all_on_start: false, change_format: "pretty" do
 
+  watch(%r{^bin/.+$})          { 'features' }
+  watch(%r{^lib/.+$})          { 'features' }
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
