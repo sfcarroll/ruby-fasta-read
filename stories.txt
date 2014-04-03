@@ -1,0 +1,28 @@
+Gene-crawler runs the program without arguments
+  The gene-crawler user runs the program without arguments
+  and is shown program usage and a brief help message
+  (required arguments, expected types for arguments values, assemblies directory structures, etc.)
+
+Gene-crawler runs the program with correct arguments
+  The gene-crawler user runs the program with correct arguments
+  and is shown the extracted sequence from the non-masked assembly
+
+Gene-crawler enters snp_masked argument
+  The gene-crawler user runs the program with a snp_masked equalling true argument
+  and is shown the extracted sequence from the SNP-masked assembly
+
+Gene-crawler runs the program with incorrect arguments
+  The gene-crawler user runs the program with incorrect arguments
+  and errors are shown (with a status code?)
+
+Gene-crawler cannot find the provided assembly file
+  The gene-crawler user runs the program with a given assembly argument
+  and an error is shown telling which assembly is not found
+
+Gene-crawler cannot find the provided chromosome
+  The gene-crawler user runs the program with a given chromosome argument
+  and an error is shown telling which chromosome is not found
+
+Gene-crawler enters out of bounds stop coordinate
+  The gene-crawler user runs the program with an out of bounds stop coordinate argument for a given chromosome
+  and an error is shown telling the stop coordinate is out of bounds for the given chromosome
