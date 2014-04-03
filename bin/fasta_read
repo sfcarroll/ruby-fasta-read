@@ -18,11 +18,15 @@ class App
         puts IO.read(path, cend.to_i - cstart.to_i, cstart.to_i)
         info "correct execution"
       else
-        exit_now!(1, "the '#{chromosome}' chromosome doesn't exist in directory structure")
+        exit_now_with!("chromosome", chromosome)
       end
     else
-      exit_now!(1, "the '#{assembly}' assembly doesn't exist in directory structure")
+      exit_now_with!("assembly", assembly)
     end
+  end
+
+  def self.exit_now_with!(argument, value)
+    exit_now!(1, "the '#{value}' #{argument} doesn't exist in directory structure")
   end
 
   # supplemental methods here
