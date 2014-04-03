@@ -47,6 +47,14 @@ Feature: My bootstrapped app kinda works
       |hg19 12 10 20 --snp|tctttttttt|ccaga  |
 
   @announce
+  Scenario: Export to file
+    When I successfully run `fasta_read hg19 12 10 20 --output=out.txt`
+    Then the file "out.txt" should contain:
+    """
+    cctcagcctc
+    """
+
+  @announce
   Scenario Outline: Painful path
     When I run `fasta_read <options>`
     Then the stderr should contain "<output>"

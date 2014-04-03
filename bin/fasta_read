@@ -16,7 +16,13 @@ class App
 
     debug("About to read #{assembly} #{snp} chr#{chromosome}:#{cstart}-#{cend}")
     if File.exist?(path)
-      puts IO.read(path, cend.to_i - cstart.to_i, cstart.to_i)
+      if options[:output]
+        File.open(options[:output], "w") do |file|
+          file.puts IO.read(path, cend.to_i - cstart.to_i, cstart.to_i)
+        end
+      else
+        puts IO.read(path, cend.to_i - cstart.to_i, cstart.to_i)
+      end
     else
       exit_now_with!(assembly_or_chromosome(assembly, chromosome))
     end
