@@ -18,26 +18,39 @@ Or install it yourself as:
 
 ## Usage
 
-    $fasta_read <assembly> <chromosome> <start> <stop> <snp masked?>
+    fasta_read [options] assembly chromosome cstart cend
 
 ## Example
 
-    fasta_read hg19 chr12 112123514 112123790 1>capture_stdout.txt 2>error.log
+    fasta_read hg19 chr12 112123514 112123790 --output=out.txt
+    
+    Options:
+    -h, --help                       Show command line help
+    -o, --output OUTPUTFILE          outputs sequence to a file
+        --snp                        return the sequence from the SNP-masked assembly
+        --version                    Show help/version info
+        --log-level LEVEL            Set the logging level
+                                     (debug|info|warn|error|fatal)
+                                     (Default: info)
 
-## Parameters
+## Arguments
 
-chromosome - id of chromosome (numeric) , inc. non-numeric such as X
-start: start coordinate (inclusive) within the chromosome
-stop: stop coordinate
-snp_masked: a boolean flag. If set to yes it should return the sequence from the SNP-masked assembly, otherwise from the non-masked one.
+    assembly
+        assembly name (hg19, mm10, etc.)
+    chromosome
+        id of chromosome (1-22 or X/Y)
+    cstart
+        start coordinate (inclusive) within the chromosome
+    cend
+        end coordinate within the chromosome
 
 ## Program output
 
 stdout: Extracted sequence (only)
+
 stderr: Any errors.
-If there are errors then stdout should be blank.
-If there are no errors then stderr should be blank
-Also return a status code
+
+using --output option export the sequence to a file
 
 ## Supporting Requirements
 
@@ -67,7 +80,7 @@ http://hgdownload.cse.ucsc.edu/goldenPath/hg19/snp138Mask/
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/fasta_read/fork )
+1. Fork it ( http://github.com/sfcarroll/ruby-fasta-read/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
