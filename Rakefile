@@ -33,7 +33,6 @@ dump_load_path
 raise
 end
 
-require 'cucumber'
 require 'cucumber/rake/task'
 gem 'rdoc' # we need the installed RDoc gem, not the system one
 require 'rdoc/task'
@@ -62,5 +61,6 @@ Rake::RDocTask.new do |rd|
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
 end
 
-task :default => [:spec,:features]
+desc "Run Cucumber features"
+task :default => [:features]
 

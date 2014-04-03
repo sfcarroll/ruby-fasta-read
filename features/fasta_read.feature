@@ -34,13 +34,21 @@ Feature: My bootstrapped app kinda works
 
   @announce
   Scenario Outline: Happy path
+    Given a file named "fasta/hg19/unmasked/chr12.fa" with:
+      """
+      gatccacctgcctcagcctcccagagtgctgggattataggtgtgagccactgcacccggcc
+      """
+    And a file named "fasta/hg19/snp/chr12.subst.fa" with:
+      """
+      GAAAACtttttcttttttttgagataggttctcactctggttgttgcccaggctggagtgca
+      """
     When I successfully run `fasta_read <options>`
     Then the output should contain "<output>"
     Then the output should not contain "<noutput>"
 
     Scenarios: unmasked
       |options      |output    |noutput|
-      |hg19 12 0 3  |gat       |cca    |
+      |hg19 12 0 3 --log-level=debug  |gat       |cca    |
       |hg19 12 10 20|cctcagcctc|ccaga  |
     Scenarios: snp
       |options            |output    |noutput|
