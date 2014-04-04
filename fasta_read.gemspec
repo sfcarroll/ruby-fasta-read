@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "fasta_read"
   spec.version       = FastaRead::VERSION
   spec.authors       = ["Andrea D'Amico"]
-  spec.email         = ["andrea.damico@gmail.com"]
+  spec.email         = ["andrea.damico@gmail.com", "sfcarroll@gmail.com"]
   spec.summary       = %q{Fasta sequence extracter}
   spec.description   = %q{Extract DNA Fasta sequence from assembly files.}
-  spec.homepage      = "https://github.com/adamico/ruby-fasta-read"
+  spec.homepage      = "https://github.com/sfcarroll/ruby-fasta-read"
 
   spec.license       = "MIT"
 
