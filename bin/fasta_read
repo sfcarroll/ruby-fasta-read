@@ -9,9 +9,33 @@ class App
   include Methadone::CLILogging
 
   main do |assembly, chromosome, cstart, cend|
-    FastaRead::Sequence.new(assembly, chromosome, cstart, cend, options).process
+    snp = masked_unmasked(options)[0]
+    subst = masked_unmasked(options)[1]
+    path = "fasta/#{assembly}/#{snp}/chr#{chromosome + subst}.fa"
+    exit_now_with!(assembly_or_chromosome(assembly, chromosome)) unless File.exist?(path)
+    fasta = IO.read(path)
+    debug("About to read #{assembly} #{snp} chr#{chromosome}:#{cstart}-#{cend}")
+    sequence = FastaRead::Sequence.new(fasta, cstart, cend, options[:multiple_lines]).process
+    if options[:output]
+      File.open(options[:output], "w") do |file|
+        file.puts sequence
+      end
+    else
+      puts sequence
+    end
   end
 
+  def self.masked_unmasked(options)
+    options[:snp] ? ["snp", ".subst"] : ["unmasked", ""]
+  end
+
+  def self.assembly_or_chromosome(assembly, chromosome)
+    Dir.exist?("fasta/#{assembly}") ? [chromosome, "chromosome"] : [assembly, "assembly"]
+  end
+
+  def self.exit_now_with!(value_and_argument)
+    exit_now!(1, "the '#{value_and_argument[0]}' #{value_and_argument[1]} doesn't exist in directory structure")
+  end
   # supplemental methods here
 
   # Declare command-line interface here
