@@ -15,7 +15,7 @@ class App
     exit_now_with!(assembly_or_chromosome(assembly, chromosome)) unless File.exist?(path)
     fasta = IO.read(path)
     debug("About to read #{assembly} #{snp} chr#{chromosome}:#{cstart}-#{cend}")
-    sequence = FastaRead::Sequence.new(fasta, cstart, cend, options[:multiple_lines]).process
+    sequence = FastaRead::Sequence.new(fasta, chromosome, cstart, cend).process
     if options[:output]
       File.open(options[:output], "w") do |file|
         file.puts sequence
@@ -23,6 +23,7 @@ class App
     else
       puts sequence
     end
+    info "#{sequence.length} base pairs"
   end
 
   def self.masked_unmasked(options)
@@ -45,10 +46,13 @@ class App
   # Accept flags via:
   # on("--flag VAL","Some flag")
   # options[flag] will contain VAL
+  options['multiple-lines'] = true
   #
   # Specify switches via:
   on "-o OUTPUTFILE", "--output", "outputs sequence to a file"
   on "--snp", "return the sequence from the SNP-masked assembly"
+  on "--multiple-lines", "return the sequence from the SNP-masked assembly"
+
   # on("--[no-]switch","Some switch")
   #
   # Or, just call OptionParser methods on opts

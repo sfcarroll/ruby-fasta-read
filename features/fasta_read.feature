@@ -4,16 +4,24 @@ Feature: My bootstrapped app kinda works
   So I don't have to do it myself
 
   Background:
-    Given a file named "fasta/hg19/unmasked/chr12.fa" with:
+    Given a file named "fasta/hg19/unmasked/chr1.fa" with:
       """
-      gatccacctgcctcagcctcccagagtgctgggattataggtgtgagccactgcacccggcc
+      >chr1
+      AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTT
+      CTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACC
+      ACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTG
+      GTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT
+      C
       """
-    And a file named "fasta/hg19/snp/chr12.subst.fa" with:
+    And a file named "fasta/hg19/snp/chr1.subst.fa" with:
       """
-      GAAAACtttttcttttttttgagataggttctcactctggttgttgcccaggctggagtgca
+      AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTT
+      CTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACC
+      ACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTG
+      GTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT
+      C
       """
 
-  @announce
   Scenario: Basic UI
     When I get help for "fasta_read"
     Then the exit status should be 0
@@ -32,37 +40,43 @@ Feature: My bootstrapped app kinda works
         |cstart    |which is required|
         |cend      |which is required|
 
-  @announce
-  Scenario Outline: Happy path
-    Given a file named "fasta/hg19/unmasked/chr12.fa" with:
+  Scenario Outline: files with one line stream
+    Given a file named "fasta/hg19/unmasked/chr1.fa" with:
       """
-      gatccacctgcctcagcctcccagagtgctgggattataggtgtgagccactgcacccggcc
+      >chr1
+      AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTT
+      CTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACC
+      ACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTG
+      GTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT
+      C
       """
-    And a file named "fasta/hg19/snp/chr12.subst.fa" with:
+    And a file named "fasta/hg19/snp/chr1.subst.fa" with:
       """
-      GAAAACtttttcttttttttgagataggttctcactctggttgttgcccaggctggagtgca
+      >chr1
+      AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTT
+      CTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACC
+      ACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTG
+      GTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT
+      C
       """
     When I successfully run `fasta_read <options>`
     Then the output should contain "<output>"
     Then the output should not contain "<noutput>"
 
     Scenarios: unmasked
-      |options      |output    |noutput|
-      |hg19 12 0 3 --log-level=debug  |gat       |cca    |
-      |hg19 12 10 20|cctcagcctc|ccaga  |
+      |options     |output    |noutput|
+      |hg19 1 0 200|AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTTCTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACCACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTGGTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT|ccaga  |
     Scenarios: snp
       |options            |output    |noutput|
-      |hg19 12 10 20 --snp|tctttttttt|ccaga  |
+      |hg19 1 0 200 --snp|AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTTCTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACCACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTGGTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT|ccaga  |
 
-  @announce
   Scenario: Export to file
-    When I successfully run `fasta_read hg19 12 10 20 --output=out.txt`
+    When I successfully run `fasta_read hg19 1 0 200 --output=out.txt`
     Then the file "out.txt" should contain:
     """
-    cctcagcctc
+    AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTTCTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACCACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTGGTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT
     """
 
-  @announce
   Scenario Outline: Painful path
     When I run `fasta_read <options>`
     Then the stderr should contain "<output>"
