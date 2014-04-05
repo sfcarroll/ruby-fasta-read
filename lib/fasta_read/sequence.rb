@@ -7,11 +7,11 @@ module FastaRead
 
     attr_reader :separate_lines
 
-    def initialize(fasta, cstart, cend, separate_lines=true)
-      @fasta =  fasta
+    def initialize(fasta, chromosome, cstart, cend)
+      @fasta =  fasta.gsub("\n", "")
+      @chromosome = ">chr#{chromosome}"
       @cstart = cstart.to_i
       @cend =   cend.to_i
-      @separate_lines = separate_lines
     end
 
     def process
@@ -19,17 +19,13 @@ module FastaRead
     end
 
     def real_cstart
-      [@cstart, line_number(@cstart)].reduce(:+)
+      cstart = @cstart
+      cstart -= 1 unless @cstart == 0
+      cstart + @chromosome.length
     end
 
     def real_cend
-      [@cend - 1, line_number(@cend - 1)].reduce(:+)
+      @cend - 1 + @chromosome.length
     end
-
-    def line_number(number)
-      return 0 unless separate_lines
-      number / 5
-    end
-
   end
 end
