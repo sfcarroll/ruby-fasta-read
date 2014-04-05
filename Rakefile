@@ -39,7 +39,7 @@ include Rake::DSL
 
 Bundler::GemHelper.install_tasks
 
-RSpec::Core::RakeTask.new do |t|
+RSpec::Core::RakeTask.new(:spec) do |t|
   # Put spec opts in a file named .rspec in root
 end
 
@@ -52,4 +52,4 @@ Cucumber::Rake::Task.new(:features) do |t|
 end
 
 desc "Run Cucumber features"
-task :default => [:features]
+task :default => [:spec, :features]
