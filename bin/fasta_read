@@ -9,12 +9,10 @@ class App
   include Methadone::CLILogging
 
   main do |assembly, chromosome, cstart, cend|
-    spn_unmasked = masked_unmasked(options)[0]
-    subst = masked_unmasked(options)[1]
-    path = "#{assembly}/#{spn_unmasked}/#{chromosome + subst}.fa"
+    path = "#{assembly}/#{snp_or_unmasked(options)[0]}/#{chromosome + snp_or_unmasked(options)[1]}.fa"
     exit_now_with!(assembly_or_chromosome(assembly, chromosome)) unless File.exist?(path)
     fasta = IO.read(path)
-    debug("About to read #{assembly} #{spn_unmasked} chr#{chromosome}:#{cstart}-#{cend}")
+    debug("About to read #{assembly} #{snp_or_unmasked(options)[0]} chr#{chromosome}:#{cstart}-#{cend}")
     sequence = FastaRead::Sequence.new(fasta, chromosome, cstart, cend).process
     if options[:output]
       File.open(options[:output], "w") do |file|
@@ -26,7 +24,7 @@ class App
     info "#{sequence.length} base pairs"
   end
 
-  def self.masked_unmasked(options)
+  def self.snp_or_unmasked(options)
     options[:snp] ? ["snp", ".subst"] : ["unmasked", ""]
   end
 
