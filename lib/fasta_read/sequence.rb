@@ -5,8 +5,6 @@ module FastaRead
     include Methadone::Main
     include Methadone::CLILogging
 
-    attr_reader :separate_lines
-
     def initialize(fasta, chromosome, cstart, cend)
       @fasta =  fasta.gsub("\n", "")
       @chromosome = ">#{chromosome}"

@@ -60,12 +60,10 @@ class App
   # Accept flags via:
   # on("--flag VAL","Some flag")
   # options[flag] will contain VAL
-  options['multiple-lines'] = true
   #
   # Specify switches via:
   on "-o OUTPUTFILE", "--output", "outputs sequence to a file"
   on "--snp", "return the sequence from the SNP-masked assembly"
-  on "--multiple-lines", "return the sequence from the SNP-masked assembly"
 
   # on("--[no-]switch","Some switch")
   #
