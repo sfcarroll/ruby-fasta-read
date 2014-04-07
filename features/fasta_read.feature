@@ -26,7 +26,6 @@ Feature: My bootstrapped app kinda works
     When I get help for "fasta_read"
     Then the exit status should be 0
       And the banner should be present
-      And there should be a one line summary of what the app does
       And the banner should include the version
       And the banner should document that this app takes options
       And the following options should be documented:
@@ -61,17 +60,16 @@ Feature: My bootstrapped app kinda works
       """
     When I successfully run `fasta_read <options>`
     Then the output should contain "<output>"
-    Then the output should not contain "<noutput>"
 
     Scenarios: unmasked
-      |options     |output    |noutput|
-      |hg19 1 0 200|AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTTCTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACCACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTGGTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT|ccaga  |
+      |options        |output                   |
+      |hg19 chr1 0 200|AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTTCTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACCACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTGGTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT|
     Scenarios: snp
-      |options            |output    |noutput|
-      |hg19 1 0 200 --snp|AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTTCTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACCACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTGGTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT|ccaga  |
+      |options            |output    |
+      |hg19 chr1 0 200 --snp|AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTTCTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACCACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTGGTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT|
 
   Scenario: Export to file
-    When I successfully run `fasta_read hg19 1 0 200 --output=out.txt`
+    When I successfully run `fasta_read hg19 chr1 0 200 --output=out.txt`
     Then the file "out.txt" should contain:
     """
     AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTTCTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACCACAGTTGACTACATCAAGGTCTGCCTCTGATCTGGTGGGAGTGCTGGGTGGTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT
@@ -82,5 +80,5 @@ Feature: My bootstrapped app kinda works
     Then the stderr should contain "<output>"
     Scenarios: incorrect assembly/chromosome
       |options                      |output                                                  |
-      |foo 12 0 3 --log-level=debug |the 'foo' assembly doesn't exist in directory structure |
-      |hg19 99 0 3 --log-level=debug|the '99' chromosome doesn't exist in directory structure|
+      |foo chr12 0 3 --log-level=debug |the 'foo' assembly doesn't exist in directory structure |
+      |hg19 chr99 0 3 --log-level=debug|the 'chr99' chromosome doesn't exist in directory structure|

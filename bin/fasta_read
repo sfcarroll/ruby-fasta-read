@@ -9,12 +9,12 @@ class App
   include Methadone::CLILogging
 
   main do |assembly, chromosome, cstart, cend|
-    snp = masked_unmasked(options)[0]
+    spn_unmasked = masked_unmasked(options)[0]
     subst = masked_unmasked(options)[1]
-    path = "fasta/#{assembly}/#{snp}/chr#{chromosome + subst}.fa"
+    path = "fasta/#{assembly}/#{spn_unmasked}/#{chromosome + subst}.fa"
     exit_now_with!(assembly_or_chromosome(assembly, chromosome)) unless File.exist?(path)
     fasta = IO.read(path)
-    debug("About to read #{assembly} #{snp} chr#{chromosome}:#{cstart}-#{cend}")
+    debug("About to read #{assembly} #{spn_unmasked} chr#{chromosome}:#{cstart}-#{cend}")
     sequence = FastaRead::Sequence.new(fasta, chromosome, cstart, cend).process
     if options[:output]
       File.open(options[:output], "w") do |file|
@@ -41,7 +41,23 @@ class App
 
   # Declare command-line interface here
 
-  description "Extract DNA Fasta sequence from assembly files."
+  description <<-EOF
+    Extract DNA Fasta sequence from assembly files.
+
+    The program depends on being run at the top of a directory tree containing .fa files. The .fa files should be of the form where each file maps to a single chomosome.
+    The directory tree will have separate branches for SNPs and unmasked files.
+
+    It must be run inside the fasta directory, e.g. the following tree is valid:
+    fasta
+    └── hg19
+        ├── snp
+        │   ├── chr1.subst.fa
+        │   └── ...
+        └── unmasked
+            ├── chr1.fa
+            └── ...
+    EOF
+
   #
   # Accept flags via:
   # on("--flag VAL","Some flag")

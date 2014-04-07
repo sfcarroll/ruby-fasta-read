@@ -9,7 +9,7 @@ module FastaRead
 
     def initialize(fasta, chromosome, cstart, cend)
       @fasta =  fasta.gsub("\n", "")
-      @chromosome = ">chr#{chromosome}"
+      @chromosome = ">#{chromosome}"
       @cstart = cstart.to_i
       @cend =   cend.to_i
     end
