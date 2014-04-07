@@ -24,7 +24,7 @@ Or install it yourself as:
 ## Example
 
     fasta_read hg19 chr12 112123514 112123790 --output=out.txt
-    
+
     Options:
     -h, --help                       Show command line help
     -o, --output OUTPUTFILE          outputs sequence to a file
@@ -39,7 +39,7 @@ Or install it yourself as:
     assembly
         assembly name (hg19, mm10, etc.)
     chromosome
-        id of chromosome (1-22 or X/Y)
+        id of chromosome (chr1-chr22 or chrx/chry)
     cstart
         start coordinate (inclusive) within the chromosome
     cend
@@ -51,30 +51,40 @@ stdout: Extracted sequence (only)
 
 stderr: Any errors.
 
-using --output option export the sequence to a file
+using --output option exports the sequence to a file
 
 ## Supporting Requirements
 
 The program depends on being run at the top of a directory tree containing .fa files. The .fa files should be of the form where each file maps to a single chomosome.
-
 The directory tree will have separate branches for SNPs and unmasked files.
 
-/fasta/hg19/unmasked/chr1.fa
-/fasta/hg19/unmasked/chr2.fa
-/fasta/hg19/unmasked/chr3.fa
-........
-/fasta/hg19/snp/chr1.subst.fa
-/fasta/hg19/snp/chr2.subst.fa
-/fasta/hg19/snp/chr3.subst.fa
-.......
-/fasta/mm10/unmasked/chr1.fa
-/fasta/mm10/unmasked/chr2.fa
-/fasta/mm10/unmasked/chr3.fa
-........
-/fasta/mm10/snp/chr1.subst.fa
-/fasta/mm10/snp/chr2.subst.fa
-/fasta/mm10/snp/chr3.subst.fa
-.......
+For example, provided the following tree the command expects to be run inside the 'fasta' directory:
+
+    fasta
+    ├── hg19
+    │   ├── snp
+    │   │   ├── chr1.subst.fa
+    |   │   ├── chr2.subst.fa
+    |   │   ├── chr3.subst.fa
+    |   │   └── ....
+    │   └── unmasked
+    │       ├── chr1.fa
+    |       ├── chr2.fa
+    |       ├── chr3.fa
+    |       └── ....
+    └── mm10
+        ├── snp
+        │   ├── chr1.subst.fa
+        │   ├── chr2.subst.fa
+        │   ├── chr3.subst.fa
+        │   └── ....
+        └── unmasked
+            ├── chr1.fa
+            ├── chr2.fa
+            ├── chr3.fa
+            └── ....
+
+Fasta files can be downloaded at:
 
 http://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/
 http://hgdownload.cse.ucsc.edu/goldenPath/hg19/snp138Mask/

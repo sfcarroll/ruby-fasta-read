@@ -45,15 +45,31 @@ class App
     The program depends on being run at the top of a directory tree containing .fa files. The .fa files should be of the form where each file maps to a single chomosome.
     The directory tree will have separate branches for SNPs and unmasked files.
 
-    It must be run inside the fasta directory, e.g. the following tree is valid:
-    fasta
-    └── hg19
-        ├── snp
-        │   ├── chr1.subst.fa
-        │   └── ...
-        └── unmasked
-            ├── chr1.fa
-            └── ...
+    For example, provided the following tree the command expects to be run inside the 'fasta' directory:
+
+        └── fasta
+            ├── hg19
+            │   ├── snp
+            │   │   ├── chr1.subst.fa
+            |   │   ├── chr2.subst.fa
+            |   │   ├── chr3.subst.fa
+            |   │   └── ....
+            │   └── unmasked
+            │       ├── chr1.fa
+            |       ├── chr2.fa
+            |       ├── chr3.fa
+            |       └── ....
+            └── mm10
+                ├── snp
+                │   ├── chr1.subst.fa
+                │   ├── chr2.subst.fa
+                │   ├── chr3.subst.fa
+                │   └── ....
+                └── unmasked
+                    ├── chr1.fa
+                    ├── chr2.fa
+                    ├── chr3.fa
+                    └── ....
     EOF
 
   #
