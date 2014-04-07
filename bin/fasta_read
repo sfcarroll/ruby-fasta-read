@@ -11,7 +11,7 @@ class App
   main do |assembly, chromosome, cstart, cend|
     spn_unmasked = masked_unmasked(options)[0]
     subst = masked_unmasked(options)[1]
-    path = "fasta/#{assembly}/#{spn_unmasked}/#{chromosome + subst}.fa"
+    path = "#{assembly}/#{spn_unmasked}/#{chromosome + subst}.fa"
     exit_now_with!(assembly_or_chromosome(assembly, chromosome)) unless File.exist?(path)
     fasta = IO.read(path)
     debug("About to read #{assembly} #{spn_unmasked} chr#{chromosome}:#{cstart}-#{cend}")
@@ -31,7 +31,7 @@ class App
   end
 
   def self.assembly_or_chromosome(assembly, chromosome)
-    Dir.exist?("fasta/#{assembly}") ? [chromosome, "chromosome"] : [assembly, "assembly"]
+    Dir.exist?("#{assembly}") ? [chromosome, "chromosome"] : [assembly, "assembly"]
   end
 
   def self.exit_now_with!(value_and_argument)
@@ -75,7 +75,7 @@ class App
   #
   # Require an argument
   arg :assembly,   "assembly name (hg19, mm10, etc.)"
-  arg :chromosome, "id of chromosome (1-22 or X/Y)"
+  arg :chromosome, "id of chromosome (chr1-chr22 or chrx/chry)"
   arg :cstart,     "start coordinate (inclusive) within the chromosome"
   arg :cend,       "end coordinate within the chromosome"
   #

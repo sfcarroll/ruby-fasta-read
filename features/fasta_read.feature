@@ -4,7 +4,7 @@ Feature: My bootstrapped app kinda works
   So I don't have to do it myself
 
   Background:
-    Given a file named "fasta/hg19/unmasked/chr1.fa" with:
+    Given a file named "hg19/unmasked/chr1.fa" with:
       """
       >chr1
       AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTT
@@ -13,7 +13,7 @@ Feature: My bootstrapped app kinda works
       GTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT
       C
       """
-    And a file named "fasta/hg19/snp/chr1.subst.fa" with:
+    And a file named "hg19/snp/chr1.subst.fa" with:
       """
       AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTT
       CTGGAGTAGGACATGGACTTGTCTTTTTGGAGGCCCATCCTCAACGCACC
@@ -40,7 +40,7 @@ Feature: My bootstrapped app kinda works
         |cend      |which is required|
 
   Scenario Outline: files with one line stream
-    Given a file named "fasta/hg19/unmasked/chr1.fa" with:
+    Given a file named "hg19/unmasked/chr1.fa" with:
       """
       >chr1
       AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTT
@@ -49,7 +49,7 @@ Feature: My bootstrapped app kinda works
       GTCTGTCTCCACCAGCACTTTGTGGGTGGGCTCTGTCCCCAGGAAATGCT
       C
       """
-    And a file named "fasta/hg19/snp/chr1.subst.fa" with:
+    And a file named "hg19/snp/chr1.subst.fa" with:
       """
       >chr1
       AATCACACGTGCAGGAACCCTTTTCCAAAGGAGGGTCACGCTCACAGCTT
