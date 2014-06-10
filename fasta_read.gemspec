@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'fasta_read/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "fasta_read"
+  spec.name          = "bio_fasta_read"
   spec.version       = FastaRead::VERSION
-  spec.authors       = ["Andrea D'Amico"]
+  spec.authors       = ["Sean Carroll"]
   spec.email         = ["andrea.damico@gmail.com", "sfcarroll@gmail.com"]
   spec.summary       = %q{Fasta sequence extracter}
   spec.description   = %q{Extract DNA Fasta sequence from assembly files.}
-  spec.homepage      = "https://github.com/sfcarroll/ruby-fasta-read"
+  spec.homepage      = "https://github.com/sfcarroll/bio-fasta-read"
 
   spec.license       = "MIT"
 
